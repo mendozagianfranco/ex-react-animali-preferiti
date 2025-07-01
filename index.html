@@ -16,17 +16,22 @@
         const { useState } = React;
         const CardAnimal = () => {
             const [animals, setAnimals] = useState([]);
-            const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
+            const [newAnimal, SetNewAnimal] = useState('');
+            const [show, setShow] = useState(false);
+            // const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
 
             function addAnimal() {
-                let random = Math.floor(Math.random() * animalsChoices.length);
-                setAnimals([...animals, animalsChoices[random]]);
-                console.log(animals);
-
+                // let random = Math.floor(Math.random() * animalsChoices.length);
+                // setAnimals([...animals, animalsChoices[random]]);
+                // console.log(animals);
+                // console.log(content);
+                setAnimals([...animals, newAnimal]);
+                setShow(false);
+                SetNewAnimal('');
             }
             return (
                 <div>
-                    <button onClick={addAnimal}>Aggiungi Animali</button>
+                    <button onClick={() => setShow(true)}>Aggiungi Animali</button>
                     <details>
                         <summary>Animali</summary>
                         <ul>
@@ -35,8 +40,31 @@
                             ))}
                         </ul>
                     </details>
+                    <Modal show={show} onClose={() => setShow(false)} content={<input type='text' value={newAnimal} onChange={(e) => SetNewAnimal(e.target.value)} />} onConfirm={addAnimal} />
                 </div>);
         };
+
+        function Modal({
+            title,
+            content,
+            show = false,
+            onClose = () => { },
+            onConfirm = () => { }
+        }) {
+            return show && ReactDOM.createPortal(
+                <div className="modal-container">
+                    <div className="modal">
+                        <h2>{title}</h2>
+                        {content}
+                        <div>
+                            <button onClick={onClose}>Annulla</button>
+                            <button onClick={onConfirm}>Conferma</button>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            );
+        }
 
         const { createRoot } = ReactDOM;
         const root = createRoot(document.querySelector('.lista-animali'));
