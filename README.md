@@ -1,90 +1,55 @@
-## Milestone 1: Inserire un Componente React
-1. Monta un componente React all’interno dell’elemento con classe .lista-animali.
+# React Animali Preferiti
 
-2. Il componente deve includere:
-- Un elemento `<details>` con titolo "Animali", che contiene:
-- Una lista `<ul>` statica che viene creata a partire da un array di stringhe (animals) dove ciascuna stringa rappresenta il nome di un animale.
+## Descrizione
+Esercitazione per imparare a integrare React direttamente in una pagina HTML senza toolchain avanzate, concentrandosi su componenti, stato, eventi e gestione asincrona.  
+L’obiettivo è creare una lista di animali dinamica con possibilità di aggiunta tramite interazione utente e API.
 
-**:Obiettivo**:: Mostrare la struttura base della lista di animali con un `<details>` che può essere espanso o contratto.
+## Milestone 1 — Inserire un Componente React
+- Montare un componente React nell’elemento con classe `.lista-animali`  
+- Il componente include un `<details>` con titolo "Animali"  
+- Mostrare una lista statica `<ul>` di animali generata da un array  
+**Obiettivo:** visualizzare la struttura base della lista e usare `<details>` per espandere/contrarre
 
-## Milestone 2: Aggiungere Animali Casuali
-1. Trasforma l’array animals usando useState (l’array è inizialmente vuoto).
-2. Aggiungi un bottone "Aggiungi Animale" sopra il `<details>`.
-3. Cliccando il bottone, un animale casuale viene aggiunto alla lista.
-4. Usa un array predefinito per scegliere casualmente:
-5. L’animale selezionato deve essere aggiunto all’interno della lista `<ul>` come `<li>`.
+## Milestone 2 — Aggiungere Animali Casuali
+- Trasformare l’array iniziale in uno stato tramite `useState`  
+- Aggiungere bottone "Aggiungi Animale" sopra il `<details>`  
+- Al click, aggiungere un animale casuale preso da array predefinito  
+- Mostrare dinamicamente il nuovo animale nella lista  
+**Obiettivo:** permettere all’utente di aggiungere elementi dinamicamente
 
-**:Obiettivo**:: L’utente può vedere gli animali aggiunti dinamicamente nella lista.
+## Milestone 3 — Usare una Modale per Aggiungere Animali
+- Partire dal componente Modal fornito, con portal React  
+- Modificare la modale per avere:
+  - `content` che può contenere un componente qualsiasi
+  - due bottoni: Annulla e Conferma
+  - prop `onConfirm` per gestire l’azione di conferma
+- Sostituire l’aggiunta casuale con una modale interattiva:
+  - Aprire la modale al click del bottone "Aggiungi Animale"
+  - Input testo per inserire il nome dell’animale
+  - Conferma: aggiunge l’animale alla lista
+  - Annulla: chiude la modale senza modifiche
+**Obiettivo:** gestire input utente e modificare lo stato attraverso la modale
 
-## Milestone 3: Usare una Modale per Aggiungere Animali
-Partendo da questo componente Modal:
-```
-function Modal({
-      title, 
-      content, 
-      show = false, 
-      onClose = () => {}
-  }){
-      return show && ReactDOM.createPortal(
-          <div className="modal-container">
-              <div className="modal">
-                  <h2>{title}</h2>
-                  <p>{content}</p>
-                  <button onClick={onClose}>Annulla</button>
-              </div>
-          </div>,
-          document.body
-      )
-  }
-```
-```
-.modal-container{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.modal{
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-}
-```
-Espandilo affinché:
+## Bonus — Utilizzare l’API per Creare Card
+- Chiamare `/animals?search=[animalName]` con il nome inserito
+- Gestire lo stato di caricamento ("Caricamento...")  
+- Dal primo risultato creare un oggetto con:
+  - `name`: nome dell’animale  
+  - `description`: descrizione o messaggio predefinito  
+  - `image`: immagine o default  
+- Aggiungere alla lista e visualizzare come card:
+  - Titolo, immagine, descrizione
+- Gestire errori:
+  - Nessun risultato → messaggio "Nessun animale trovato"  
+  - Problemi di rete → messaggio "Errore durante la ricerca dell’animale"  
+**Obiettivo:** imparare a fare chiamate API, gestire stati di caricamento e errori, visualizzare dati dinamici in React
 
-- La vecchia prop content può essere usata per passare un componente qualsiasi.
-- Un nuovo div in fondo alla modale contiene il bottone Annulla e un nuovo bottone Conferma.
-- Una nuova prop onConfirm si aspetta una funzione per gestire l’azione di conferma.
-1. Sostituisci l’aggiunta casuale dell’animale con una modale interattiva:
-    - Cliccando il bottone "Aggiungi Animale," si apre una modale.
-    - La modale include un input di testo (passato al prop content) per inserire il nome di un animale.
-    - Conferma: Aggiunge l’animale alla lista e chiude la modale.
-    - Annulla: Chiude la modale senza modificare la lista.
+## Tecnologie
+- React (senza toolchain)  
+- useState, useEffect  
+- Eventi e gestione modale  
+- Fetch API e gestione asincrona  
+- React Portals
 
-**Obiettivo**: L’utente può aggiungere animali specifici utilizzando la modale.
-
-##  Bonus: Utilizzare l'API per Creare Card
-
-Utilizza l'API:
-`/animals?search=[animalName]`
-per effettuare una ricerca dell'animale basata sul contenuto dell'input: 
-- Sostituisci `[animalName]` con il valore inserito dall'utente.
-- Assicurati di gestire lo stato di caricamento mentre l'API è in fase di risposta (mostra un messaggio come "Caricamento...").
-1. Dal primo risultato restituito dall'array (se presente), crea un oggetto che abbia queste proprietà:
-- name: Il nome dell'animale.
-- description: La descrizione dell'animale (o un messaggio predefinito come "Descrizione non disponibile" se manca).
-- image: L'immagine dell'animale (usa un'immagine di default se non è disponibile).
-2. Aggiungi l'oggetto alla lista degli animali e visualizzalo come una card, con:
-- Titolo: Il nome dell'animale.
-- Immagine (se presente).
-- Descrizione.
-3. Gestione degli errori:
-- Se la ricerca non restituisce risultati, informa l'utente con un messaggio di errore. (es.: "Nessun animale trovato")
-- Mostra un messaggio in caso di problemi di rete o altri errori. (es.: "Errore durante la ricerca dell'animale")
-
-**Obiettivo**: Permetti agli utenti di aggiungere animali specifici utilizzando l'API per ottenere informazioni, mostrando eventuali errori in modo chiaro.
+## Scopo
+Apprendere l’uso di React direttamente in HTML, creando componenti interattivi, gestendo stato, input utente, modali e chiamate API.
