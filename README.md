@@ -53,3 +53,8 @@ L’obiettivo è creare una lista di animali dinamica con possibilità di aggiun
 
 ## Scopo
 Apprendere l’uso di React direttamente in HTML, creando componenti interattivi, gestendo stato, input utente, modali e chiamate API.
+
+## Backend Mock
+
+Questo progetto utilizza un backend mock pronto all’uso fornito da [Boolean IT / resources](https://github.com/boolean-it/resources). Non è necessario creare un database locale: basta eseguire il mock server per avere le API attive.
+
